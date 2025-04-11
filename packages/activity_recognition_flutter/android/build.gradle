@@ -1,40 +1,20 @@
-group 'dk.cachet.activity_recognition_flutter'
-version '1.0'
+// File: packages/activity_recognition_flutter/android/build.gradle
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-    }
-}
-
-rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-/*apply plugin: 'com.android.library'*/
 plugins {
     id 'com.android.library'
 }
 
-
 android {
+    namespace "dk.cachet.activity_recognition_flutter"
     compileSdkVersion 33
 
     defaultConfig {
-      minSdkVersion 26
+        minSdkVersion 26
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
-    namespace "dk.cachet.activity_recognition_flutter"
 }
 
 dependencies {
