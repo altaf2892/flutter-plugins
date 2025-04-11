@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 
 void main() => runApp(new ActivityRecognitionApp());
 
@@ -33,9 +33,7 @@ class _ActivityRecognitionAppState extends State<ActivityRecognitionApp> {
   void _init() async {
     // Android requires explicitly asking permission
     if (Platform.isAndroid) {
-      if (await Permission.activityRecognition.request().isGranted) {
-        _startTracking();
-      }
+      _startTracking();
     }
 
     // iOS does not
