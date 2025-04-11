@@ -19,7 +19,11 @@ rootProject.allprojects {
     }
 }
 
-apply plugin: 'com.android.library'
+/*apply plugin: 'com.android.library'*/
+plugins {
+    id 'com.android.library'
+}
+
 
 android {
     compileSdkVersion 33
