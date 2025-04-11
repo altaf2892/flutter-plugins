@@ -34,9 +34,11 @@ public class ForegroundService extends Service {
     private void startPluginForegroundService(Bundle extras) {
         Context context = getApplicationContext();
 
-        // Delete notification channel if it already exists
+
+  /*      // Delete notification channel if it already exists
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.deleteNotificationChannel("foreground.service.channel");
+*/
 
         // Get notification channel importance
         Integer importance;
