@@ -87,32 +87,39 @@ public class ActivityRecognitionFlutterPlugin implements FlutterPlugin, EventCha
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
+        if (!(arguments instanceof HashMap)) {
+            Log.e(TAG, "Invalid arguments received in onListen");
+            return;
+        }
+
         HashMap<String, Object> args = (HashMap<String, Object>) arguments;
-        boolean fg = (boolean) args.get("foreground");
-        if(fg) {
+        boolean fg = args.containsKey("foreground") && (boolean) args.get("foreground");
+
+        if (fg) {
             startForegroundService();
         }
-        Log.d(TAG, "Foreground mode: " + fg);
 
+        Log.d(TAG, "Foreground mode: " + fg);
         eventSink = events;
         startActivityTracking();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     void startForegroundService() {
-        Intent intent = new Intent(androidActivity, ForegroundService.class);
+        if (androidActivity == null || androidContext == null) {
+            Log.e(TAG, "Cannot start ForegroundService: androidActivity or androidContext is null");
+            return;
+        }
 
-        // Tell the service we want to start it
+        Intent intent = new Intent(androidActivity, ForegroundService.class);
         intent.setAction("start");
 
-        // Pass the notification title/text/icon to the service
         intent.putExtra("title", "MonsensoMonitor")
                 .putExtra("text", "Monsenso Foreground Service")
-            .putExtra("icon", android.R.drawable.ic_menu_mylocation)
+                .putExtra("icon", android.R.drawable.ic_menu_mylocation)
                 .putExtra("importance", 3)
                 .putExtra("id", 10);
 
-        // Start the service
         androidContext.startForegroundService(intent);
     }
 

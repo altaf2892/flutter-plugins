@@ -68,22 +68,24 @@ public class ForegroundService extends Service {
 //        int icon = getResources().getIdentifier((String) extras.get("icon"), "drawable", context.getPackageName());
        int icon = android.R.drawable.ic_menu_mylocation; // ✅ built-in icon
 
-        
+
+        String title = extras != null ? extras.getString("title", "Service Running") : "Service Running";
+        String text = extras != null ? extras.getString("text", "Processing...") : "Processing...";
+
         // Make notification
         Notification notification = new Notification.Builder(context, "foreground.service.channel")
-                .setContentTitle((CharSequence) extras.get("title"))
-                .setContentText((CharSequence) extras.get("text"))
+                .setContentTitle(title)
+                .setContentText(text)
                 .setOngoing(true)
-                .setSmallIcon(icon == 0 ? 17301514 : icon) // Default is the star icon
+                .setSmallIcon(icon == 0 ? 17301514 : icon)
                 .build();
 
         // Get notification ID
-        Integer id;
+        int id = 197812504;
         try {
-            id = Integer.parseInt((String) extras.get("id"));
-        } catch (NumberFormatException e) {
-            id = 0;
-        }
+            String idRaw = extras != null ? extras.getString("id") : null;
+            id = Integer.parseInt(idRaw != null ? idRaw : "197812504");
+        } catch (NumberFormatException ignored) {}
 
         // Put service in foreground and show notification (id of 0 is not allowed)
         startForeground(id != 0 ? id : 197812504, notification);

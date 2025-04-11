@@ -7,8 +7,15 @@ import android.util.Log;
 
 public class ActivityRecognizedBroadcastReceiver extends BroadcastReceiver {
 
+    private static final String TAG = "ActivityReceiver";
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        ActivityRecognizedService.enqueueWork(context, intent);
+        if (intent != null) {
+            Log.d(TAG, "Received activity recognition intent");
+            ActivityRecognizedService.enqueueWork(context, intent);
+        } else {
+            Log.w(TAG, "Received null intent");
+        }
     }
 }
